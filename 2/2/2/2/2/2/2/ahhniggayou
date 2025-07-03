@@ -1,3 +1,5 @@
+tween
+
 local ui_options = {
 	main_color = Color3.fromRGB(150, 1, 1),
 	min_size = Vector2.new(400, 300),
@@ -144,6 +146,15 @@ Toggle.Size = UDim2.new(0, 20, 0, 20)
 Toggle.ZIndex = 2
 Toggle.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=420&height=420&assetId=4731371541"
 
+local function roundify(button)
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, 8) -- Rounded corners
+	corner.Parent = button
+end
+
+roundify(Toggle)
+
+
 Base.Name = "Base"
 Base.Parent = Bar
 Base.BackgroundColor3 = Color3.new(0.160784, 0.290196, 0.478431)
@@ -185,6 +196,18 @@ Title.TextColor3 = Color3.new(1, 1, 1)
 Title.TextSize = 20
 Title.TextXAlignment = Enum.TextXAlignment.Left
 
+local function toggleDarkMode(isDark)
+	if isDark then
+		Window.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Dark background
+		Title.TextColor3 = Color3.fromRGB(255, 255, 255) -- Light text
+	else
+		Window.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Light background
+		Title.TextColor3 = Color3.fromRGB(0, 0, 0) -- Dark text
+	end
+end
+
+toggleDarkMode(true)
+
 TabSelection.Name = "TabSelection"
 TabSelection.Parent = Window
 TabSelection.BackgroundColor3 = Color3.new(1, 1, 1)
@@ -206,7 +229,7 @@ TabButtons.Size = UDim2.new(1, 0, 1, 0)
 UIListLayout.Parent = TabButtons
 UIListLayout.FillDirection = Enum.FillDirection.Horizontal
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout.Padding = UDim.new(0, 2)
+UIListLayout.Padding = UDim.new(0, 10)
 
 Frame.Parent = TabSelection
 Frame.BackgroundColor3 = Color3.new(0.12549, 0.227451, 0.372549)
@@ -430,6 +453,8 @@ Button.Text = "      Folder"
 Button.TextColor3 = Color3.new(1, 1, 1)
 Button.TextSize = 17
 Button.TextXAlignment = Enum.TextXAlignment.Left
+
+roundify(Button)
 
 TextButton_Roundify_4px_3.Name = "TextButton_Roundify_4px"
 TextButton_Roundify_4px_3.Parent = Button
@@ -832,7 +857,7 @@ UIS.InputBegan:Connect(function(input, gameProcessed)
 end)
 
 local function Resize(part, new, _delay)
-	_delay = _delay or 0.5
+	_delay = _delay or 0.1
 	local tweenInfo = TweenInfo.new(_delay, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	local tween = TweenService:Create(part, tweenInfo, new)
 	tween:Play()
